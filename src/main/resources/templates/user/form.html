@@ -14,12 +14,12 @@
         </div>
         <div>
             <label for="email">이메일</label>
-            <input type="text" id="email" name="email" required>
+            <input type="text" id="email" name="email" required><!--required 사용자가 값을 입력하지 않으면 폼이 전송되지 않도록 하는 브라우저 기본 검증 기능-->
         </div>
         <div>
             <label for="role">권한</label>
             <select id="role" name="role">
-                <option th:each="r : ${role}"
+                <option th:each="r : ${roles}"
                         th:value="${r}"
                         th:text="${r}">
                 </option>
@@ -28,7 +28,7 @@
 
         <div>
             <button type="submit">등록</button>
-            <a th:href="@{/user}">목록으로</a>
+            <a th:href="@{/users}">목록으로</a>
         </div>
     </form>
 </body>

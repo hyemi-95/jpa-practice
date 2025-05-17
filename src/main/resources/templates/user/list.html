@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${user}"> <!-- th:each 리스트 반복,  ${user} Controller에서 넘긴 회원 리스트-->
+        <tr th:each="user : ${users}"> <!-- th:each 리스트 반복,  ${user} Controller에서 넘긴 회원 리스트-->
             <td th:text="${user.id}"></td> <!-- th:text 태그 안에 값 출력-->
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>

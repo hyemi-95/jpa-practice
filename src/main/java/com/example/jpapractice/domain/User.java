@@ -5,6 +5,7 @@ import lombok.*;
 
 
 @Entity
+@Table(name = "users") //H2 DB에서는 user가 예약어이기 때문에 직접 테이블명으로 쓰면 에러발생
 @Getter //모든 필드에 대한 Getter 자동 생성
 @NoArgsConstructor(access =  AccessLevel.PROTECTED) // JPA 기본 생성자(외부 생성 막음)
 @AllArgsConstructor //모든 필드를 매개로 한 생성자 생성
