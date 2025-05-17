@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 목록</title>
+</head>
+<body>
+    <h1>회원 목록</h1>
+
+    <a th:href="@{/users/new}">➕ 새 회원 등록</a>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>이메일</th>
+            <th>권한</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${user}"> <!-- th:each 리스트 반복,  ${user} Controller에서 넘긴 회원 리스트-->
+            <td th:text="${user.id}"></td> <!-- th:text 태그 안에 값 출력-->
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role}"></td>
+            <td>
+                <form th:action="@{/users/delete/{id}(id=${user.id})}" method="post"> <!--th:action 삭제 요청 url 동적 생성-->
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 등록</title>
+</head>
+<body>
+    <h1>회원 등록</h1>
+
+    <form th:action="@{/users}" method="post"> <!--POST 요청으로 /users에 회원 등록 요청-->
+        <div>
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required> <!--name="name" 	이 값은 @RequestParam("name")으로 컨트롤러에 전달됨-->
+        </div>
+        <div>
+            <label for="email">이메일</label>
+            <input type="text" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="role">권한</label>
+            <select id="role" name="role">
+                <option th:each="r : ${role}"
+                        th:value="${r}"
+                        th:text="${r}">
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <button type="submit">등록</button>
+            <a th:href="@{/user}">목록으로</a>
+        </div>
+    </form>
+</body>
+</html>
+
+<!--
+th:each="r : ${role}"  -> Enum(Role) 값을 option에 반복 출력
+th:value="${r}" -> USER, ADMIN 중 실제 값 전달
+th:text="${r}" -> 셀렉트 박스에서 보일 텍스트 (예: USER)
+-->
