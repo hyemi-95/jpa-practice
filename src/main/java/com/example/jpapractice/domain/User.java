@@ -8,7 +8,7 @@ import lombok.*;
 @Table(name = "users") //H2 DB에서는 user가 예약어이기 때문에 직접 테이블명으로 쓰면 에러발생
 @Getter //모든 필드에 대한 Getter 자동 생성
 @NoArgsConstructor(access =  AccessLevel.PROTECTED) // JPA 기본 생성자(외부 생성 막음)
-@AllArgsConstructor //모든 필드를 매개로 한 생성자 생성
+@AllArgsConstructor //모든 필드를 받는 생성자 생성(빌더 내부에서 사용)
 @Builder // 이 생성자 기반으로 builder 생성됨!
 public class User {
     
@@ -21,7 +21,10 @@ public class User {
     
     @Column(nullable = false, unique = true,length = 100) //이메일은 유일 + 필수
     private String email;
-    
+
+    @Column(nullable = false, length = 100) //비밀번호 필수
+    private String password;
+
     @Enumerated(EnumType.STRING) // USER / ADMIN  으로 저장
     @Column(nullable = false) // 필수
     private Role role;

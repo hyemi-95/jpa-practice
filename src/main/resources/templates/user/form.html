@@ -7,23 +7,28 @@
 <body>
     <h1>회원 등록</h1>
 
-    <form th:action="@{/users}" method="post"> <!--POST 요청으로 /users에 회원 등록 요청-->
+    <form th:action="@{/users}" method="post" th:object="${userCreateDto}"> <!--POST 요청으로 /users에 회원 등록 요청 ,th:object="${form} 컨트롤러에서 넘긴 객체를 사용하겠다 선언-->
         <div>
             <label for="name">이름</label>
-            <input type="text" id="name" name="name" required> <!--name="name" 	이 값은 @RequestParam("name")으로 컨트롤러에 전달됨-->
+            <input type="text" id="name" th:field="*{name}" required> <!--th:field="*{name} 은 th:object="${form}"에서 지정한 객체의 name 필드를 참조 -->
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
         <div>
             <label for="email">이메일</label>
-            <input type="text" id="email" name="email" required><!--required 사용자가 값을 입력하지 않으면 폼이 전송되지 않도록 하는 브라우저 기본 검증 기능-->
+            <input type="text" id="email" th:field="*{email}" required><!--required 사용자가 값을 입력하지 않으면 폼이 전송되지 않도록 하는 브라우저 기본 검증 기능-->
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="text" id="password" th:field="*{password}" required>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
         </div>
         <div>
             <label for="role">권한</label>
-            <select id="role" name="role">
-                <option th:each="r : ${roles}"
-                        th:value="${r}"
-                        th:text="${r}">
-                </option>
+            <select id="role" th:field="*{role}">
+                <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
             </select>
+            <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
         </div>
 
         <div>
@@ -34,8 +39,17 @@
 </body>
 </html>
 
-<!--
-th:each="r : ${role}"  -> Enum(Role) 값을 option에 반복 출력
+<!--th:each="r : ${role}"  -> Enum(Role) 값을 option에 반복 출력
 th:value="${r}" -> USER, ADMIN 중 실제 값 전달
 th:text="${r}" -> 셀렉트 박스에서 보일 텍스트 (예: USER)
--->
+
+ th:field="*{필드}" 형식은 <form th:action="@{/users}" method="post" th:object="${userCreateDto}"> 처럼  th:object="${객체}" 선언이 되어있을때만 사용
+  th:field="*{}" 에서 *{}는 '참조 객체의 필드'를 의미하기 때문
+  오잉? 참조 객체가 어딘데? => 바로 th:object="${userCreateDto}" 여기서 선언해줌
+ 즉 *{name} 은 결국 → ${userCreateDto.name} 과 같은 뜻이고 input name="name" value="..."와 같이 자동 처리 됨
+ ****보통은 th:object + th:field 세트를 항상 같이 씀****
+
+
+ th:if="${#fields.hasErrors('name')}" => #fields는 Thymeleaf의 내장객체
+ hasErrors('name')는 => "name" 필드에 유효성 검사 에러가 있는지 확인
+ ****이 방식은 BindingResult를 기반으로 동작함. 그래서 반드시 컨트롤러에서 @Valid 와 BindingResult 같이 써야 함****-->

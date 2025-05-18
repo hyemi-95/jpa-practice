@@ -29,12 +29,17 @@ public class UserService {
 
     //회원 등록(입력이므로 별도로 Transactional어노테이션 필요)
     @Transactional
-    public User saveUser(String name, String email, Role role) {
-        User user = User.builder()
-                .name(name)
+    public User saveUser(String name, String email, String password, Role role) {
+        if(userRepository.findByEmail(email).isPresent()){ // isPresent() -> 	값이 있는지 확인
+            throw new IllegalStateException("이미 사용 중인 이메일입니다."); //중복이면 예외 발생시켜서 컨트롤러에서 처리하게 함
+        }
+
+        User user = User.builder() //Lombok의 @Builder 패턴을 활용한 객체 생성 방식, UserBuilder라는 내부 클래스를 Lombok이 자동 생성
+                .name(name) //생성자 파라미터는 순서가 다르면 오류가 발생하지만 ,빌더방식은 순서 상관없이 명시적,
                 .email(email)
+                .password(password)
                 .role(role)
-                .build();
+                .build();//->지금까지 설정한 값으로 실제 User 객체를 생성함, 내부적으로 new User(...) 생성자 호출 됨
 
         return userRepository.save(user);
     }
@@ -43,6 +48,6 @@ public class UserService {
     @Transactional //등록/삭제 등 변경 작업에는 별도 트랜잭션 선언
     public void deleteUser(Long id){
         userRepository.deleteById(id);
-    }
+    };
 
 }
