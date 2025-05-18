@@ -24,6 +24,6 @@ public class UserCreateDto{ //검증룰
     @Size(min = 6, message = "비밀번호는 6자 이상이어야 합니다.")
     private String password;
 
-    @NotNull(message = "권한을 선택해주세요.")
-    private Role role;
+//    @NotNull(message = "권한을 선택해주세요.")
+//    private Role role;
 }

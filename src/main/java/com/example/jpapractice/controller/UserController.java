@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/new") // "/users/new" 요청 시 사용자 등록 폼 페이지 보여줌
     public String showCreateForm(Model model){
         model.addAttribute("userCreateDto", new UserCreateDto()); // ENUM 전체 넘기기
-        model.addAttribute("roles", Role.values()); // ENUM 전체 넘기기
+//        model.addAttribute("roles", Role.values()); // ENUM 전체 넘기기
         return "user/form"; // templates/user/form.html
     }
 
@@ -45,7 +45,7 @@ public class UserController {
     {
         //1.유효성 검사 실패시
         if(result.hasErrors()){ //모든 필드 오류 체크 , result.hasFieldErrors("email") 형식으로 필드별 에러 추적 가능
-            model.addAttribute("roles",Role.values());
+//            model.addAttribute("roles",Role.values());
            return  "user/form"; //오류 발생 시 다시 폼으로
             // model.addAttribute("userCreateDto",form)을 안하는 이유:
             // @Valid UserCreateDto form 은 @Valid @ModelAttribute("userCreateDto") UserCreateDto form과 같음 그런데 @ModelAttribute 가 생략되서
@@ -55,10 +55,10 @@ public class UserController {
         }
         //2.이메일 중복 예외처리
         try {
-            userService.saveUser(form.getName(), form.getEmail(), form.getPassword(), form.getRole()); // Dto에 담긴 값, form음 값을 담고있는 변수일 뿐 바인딩에는 사용안됨
+            userService.saveUser(form.getName(), form.getEmail(), form.getPassword(), Role.USER); // Dto에 담긴 값, form음 값을 담고있는 변수일 뿐 바인딩에는 사용안됨
         } catch (IllegalStateException e){
             result.rejectValue("email","duplicate", e.getMessage()); // 필드단위 에러 추가
-            model.addAttribute("roles",Role.values());
+//            model.addAttribute("roles",Role.values());
             return "user/form";
         }
         //3.성공 시

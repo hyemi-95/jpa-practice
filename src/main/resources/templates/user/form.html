@@ -23,13 +23,13 @@
             <input type="text" id="password" th:field="*{password}" required>
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
         </div>
-        <div>
-            <label for="role">권한</label>
-            <select id="role" th:field="*{role}">
-                <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
-            </select>
-            <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
-        </div>
+<!--        <div>-->
+<!--            <label for="role">권한</label>-->
+<!--            <select id="role" th:field="*{role}">-->
+<!--                <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>-->
+<!--            </select>-->
+<!--            <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>-->
+<!--        </div>-->
 
         <div>
             <button type="submit">등록</button>
