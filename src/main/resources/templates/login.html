@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+    <h1>로그인</h1>
+
+    <!--Spring Security가 자동으로 이걸 인식해서 로그인 처리함(username,password)-->
+    <form th:action="@{/login}" method="post"> <!--Spring Security가 로그인 처리하는 기본 URL로 POST 전송-->
+        <label for="username">이메일</label>
+        <input type="text" id="username" name="username" required/><!--name="username" :Spring Security기본설정 -->
+        <br/>
+
+        <label for="password">비밀번호</label>
+        <input type="text" id="password" name="password" required/>
+        <br/>
+
+        <button type="submit">로그인</button>
+    </form>
+
+    <!--로그인 실패 시 메시지 표시-->
+    <div th:if="${param.error}"> <!--로그인 실패 시 자동으로 /login?error 쿼리 파라미터가 붙음-->
+        <p style="color:red;">로그인에 실패했습니다. 이메일 또는 비밀번호를 확인하세요.</p>
+    </div>
+
+    <!--로그아웃 성고 메시지-->
+    <div th:if="${param.logout}"><!--로그아웃 성공 시 /login?logout으로 이동하게 설정했기 때문-->
+        <p style="color:green;">성공적으로 로그아웃 되었습니다.</p>
+    </div>
+</body>
+</html>

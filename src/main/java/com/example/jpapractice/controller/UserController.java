@@ -62,7 +62,7 @@ public class UserController {
             return "user/form";
         }
         //3.성공 시
-        return "redirect:/users"; //저장 후 목록 페이지로 리다이렉트
+        return "redirect:/login"; //저장 후 로그인 페이지로 리다이렉트
 
         //return "뷰 이름" → 모델 자동 바인딩 된다
         //return "redirect:/경로" → 모델 자동 바인딩 안 된다
