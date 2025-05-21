@@ -2,10 +2,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>회원 등록</title>
+    <title>회원 가입</title>
 </head>
 <body>
-    <h1>회원 등록</h1>
+    <h1>회원 가입</h1>
 
     <form th:action="@{/users}" method="post" th:object="${userCreateDto}"> <!--POST 요청으로 /users에 회원 등록 요청 ,th:object="${form} 컨트롤러에서 넘긴 객체를 사용하겠다 선언-->
         <div>
@@ -32,7 +32,7 @@
 <!--        </div>-->
 
         <div>
-            <button type="submit">등록</button>
+            <button type="submit">가입하기</button>
             <a th:href="@{/users}">목록으로</a>
         </div>
     </form>

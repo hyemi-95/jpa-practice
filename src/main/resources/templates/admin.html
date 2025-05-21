@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+</head>
+<body>
+
+    <h1>👑 관리자 페이지</h1>
+    <p>이곳은 관리자만 접근 가능한 페이지입니다.</p>
+
+    <a th:href="@{/users}">
+        <button>회원관리</button>
+    </a>
+    <div>
+        <a th:href="@{/main}">← 메인으로</a>
+    </div>
+</body>
+</html>

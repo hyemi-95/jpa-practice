@@ -6,17 +6,50 @@
 </head>
 <body>
 
-    <div style="text-align:right;">
-        <a href="/posts">게시판</a>
+    <div style="text-align:right; padding: 10px;">
+        <div th:if="${isLoggedIn}">
+            <a href="/posts">📋 게시판</a>
+            <a href="/admin" th:if="${userRole == 'ADMIN'}" style="margin-left: 10px;">⚙ 관리자 페이지</a>
+            <a href="/logout" style="margin-left: 10px;">🚪 로그아웃</a>
+        </div>
 
-        <a href="/admin" th:if="${userRole == 'ADMIN'}" style="margin-left: 10px;">관리자 페이지</a>
-
-        <a href="/logout">로그아웃</a>
-
+        <div th:if="${!isLoggedIn}">
+            <a href="/login">🔓 로그인</a>
+            <a href="/users/new" style="margin-left: 10px;">📝 회원가입</a>
+        </div>
     </div>
 
-    <h2 th:text="|환영합니다, ${userName}님!|">로그인 사용자 이름 표시</h2>
+    <h2 th:if="${isLoggedIn}" th:text="|환영합니다, ${userName}님!|">로그인 사용자 이름 표시</h2>
+    <h2 th:if="${!isLoggedIn}">메인 페이지입니다.</h2>
+    <p th:if="${!isLoggedIn}">로그인하지 않아도 볼 수 있는 공용 메인 페이지입니다.</p>
 
-    <p>이 페이지는 로그인한 사용자만 접근할 수 있습니다.</p>
+    <div id="alertBox"
+         th:if="${accessDeniedMsg}"
+         style="position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            background-color: #ffe6e6; color: #a00;
+            border: 1px solid #f5c2c2; padding: 12px 40px 12px 20px;
+            border-radius: 6px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-weight: bold; z-index: 1000; text-align: center;">
+
+        <!-- 메시지 -->
+        <span th:text="${accessDeniedMsg}"></span>
+
+        <!-- 닫기 버튼 -->
+        <button onclick="closeAlert()"
+                style="position: absolute; top: 6px; right: 10px;
+                   background: none; border: none; color: #a00;
+                   font-size: 16px; font-weight: bold; cursor: pointer;">
+            ×
+        </button>
+    </div>
+
+    <script>
+        function closeAlert(){
+            const alertBox = document.getElementById('alertBox');
+            if (alertBox){
+                alertBox.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

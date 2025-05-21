@@ -1,6 +1,7 @@
 package com.example.jpapractice.config;
 
 
+import com.example.jpapractice.security.CustomAccessDeniedHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration //설정 클래스임을 명시하는 어노테이션, Spring이 이 클래스를 읽고, 내부에 정의된 @Bean들을 등록
 public class SecurityConfig {//
     //Spring Security 보안 규칙도 여기에 추가
+
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+
+    public SecurityConfig(CustomAccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
 
     @Bean
     //이 메서드가 반환하는 객체를 Spring Bean으로 등록
@@ -37,8 +44,8 @@ public class SecurityConfig {//
                 .csrf(csrf->csrf.disable()) // CSRF (사이트 간 요청 위조) 방지 기능을 끔 -> 테스트환경에서는 꺼도 되지만 실운영에서는 반트시 활성화해야함 ,
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST,"/users").permitAll()//회원가입 저장 허용
-                        .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")//목록은 관리자만
-                        .requestMatchers("/","/login","/users/new","/users", "/css/**", "/js/++","/inages/**","/error")//여기에 있는 경로는 로그인 없이도 접근 가능
+                        .requestMatchers(HttpMethod.GET,"/users","/admin/**").hasRole("ADMIN")//목록은 관리자만
+                        .requestMatchers("/","/login","/users/new","/users", "/css/**", "/js/++","/inages/**","/error","/main")//여기에 있는 경로는 로그인 없이도 접근 가능
                         .permitAll()//위 경로들은 누구나 접근 가능
                         .anyRequest().authenticated()//나머지 모든 경로는 로그인해야 접근 가능
                 )
@@ -51,7 +58,9 @@ public class SecurityConfig {//
                 .logout(logout-> logout
                         .logoutSuccessUrl("/login?logout") //  logout으로 로그아웃 요청하면 자동 처리됨, 로그아웃 성공 시 /login?logout 으로 이동
                         .permitAll()
-                );
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(accessDeniedHandler));
 
         return http.build(); //위에 설정한 모든 보안 규칙을 모아서 Spring Security가 실제로 동작할 수 있도록 SecurityFilterChain을 완성하는 것
     }
