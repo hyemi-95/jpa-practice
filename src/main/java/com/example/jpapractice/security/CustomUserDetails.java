@@ -61,4 +61,8 @@ public class CustomUserDetails implements UserDetails {
     public Role getRole() {//권한 필요 시 사용
         return user.getRole();
     }
+
+    public User getUser() {
+        return user;
+    }
 }

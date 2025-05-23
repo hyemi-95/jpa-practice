@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${editMode}?'게시글 수정':'게시글 등록'">게시글</title>
+</head>
+<body>
+    <h1 th:text="${editMode}?'게시글 수정':'게시글 등록'"> 게시글</h1>
+
+    <form th:action="${editMode}? @{'/posts/update/' + ${post.id}} : @{/posts/new}" method="post" th:object="${post}">
+        <label for="'title">제목</label>
+        <input type="text" id="title" th:field="*{title}" required/>
+        <br/><br/>
+
+        <label for="content">내용</label><br/>
+        <textarea id="content" th:field="*{content}" rows="10" cols="40" required></textarea>
+        <br/><br/>
+
+        <button type="submit" th:text="${editMode}? '수정하기':'등록하기'">제출</button>
+    </form>
+
+    <br/>
+    <a th:href="@{/main}">← 메인으로</a>
+</body>
+</html>
