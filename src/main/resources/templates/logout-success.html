@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그아웃 완료</title>
+    <style>
+        /*toast 메시지 스타일 설정*/
+        .toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 5px;
+            font-size: 15px;
+            opacity: 0.9;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadein 0.5s, fadeout 0.5s 1.5s; /*등장/ 퇴장 애니메이션 지정*/
+        }
+        /*keyframes CSS 애니메이션 장면정의서 같은 역할*/
+        /*toast가 나타날 때 애니메이션*/
+        @keyframes fadein {
+            from { opacity: 0; transform: translate(-50%, 10px); }
+            to { opacity: 0.9; transform: translate(-50%, 0); }
+        }
+        /*toast가 사라질 때 애니메이션*/
+        @keyframes fadeout {
+            from { opacity: 0.9; transform: translate(-50%); }
+            to { opacity: 0; transform: translate(-50%, 10px); }
+        }
+    </style>
+
+</head>
+<body>
+<!--실제 toast 메시지 표시 영역-->
+<div class="toast">성공적으로 로그아웃 되었습니다.</div>
+
+<!--2초 후 메인페이지로 자동 이동-->
+<script>
+    setTimeout(() => {
+        window.location.href = "/main";
+    }, 2000); // 2초 후 메인으로 이동
+</script>
+</body>
+</html>

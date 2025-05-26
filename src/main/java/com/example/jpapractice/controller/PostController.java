@@ -8,6 +8,7 @@ import com.example.jpapractice.security.CustomUserDetails;
 import com.example.jpapractice.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,9 +46,10 @@ public class PostController {
     
     //게시글 목록
     @GetMapping
-    public String listPosts(Model model){
-        List<Post> posts = postService.findAllPost();
-        model.addAttribute("posts",posts);
+    public String listPosts(Model model, @RequestParam(defaultValue ="0") int page){
+        Page<Post> postpage = postService.getPostList(page);
+        model.addAttribute("postPage",postpage);
+        model.addAttribute("posts",postpage.getContent());
         return "post/postList";
     }
 

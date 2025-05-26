@@ -45,7 +45,7 @@ public class SecurityConfig {//
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST,"/users").permitAll()//회원가입 저장 허용
                         .requestMatchers(HttpMethod.GET,"/users","/admin/**").hasRole("ADMIN")//목록은 관리자만
-                        .requestMatchers("/","/login","/users/new","/users", "/css/**", "/js/++","/inages/**","/error","/main")//여기에 있는 경로는 로그인 없이도 접근 가능
+                        .requestMatchers("/","/login","/logout-success","/users/new","/users", "/css/**", "/js/++","/inages/**","/error","/main")//여기에 있는 경로는 로그인 없이도 접근 가능
                         .permitAll()//위 경로들은 누구나 접근 가능
                         .anyRequest().authenticated()//나머지 모든 경로는 로그인해야 접근 가능
                 )
@@ -56,7 +56,7 @@ public class SecurityConfig {//
                         .permitAll()//로그인 페이지는 로그인 없이 접근 가능
                 )
                 .logout(logout-> logout
-                        .logoutSuccessUrl("/login?logout") //  logout으로 로그아웃 요청하면 자동 처리됨, 로그아웃 성공 시 /login?logout 으로 이동
+                        .logoutSuccessUrl("/logout-success") // 로그아웃 후 중간 페이지로
                         .permitAll()
                 )
                 .exceptionHandling(ex -> ex

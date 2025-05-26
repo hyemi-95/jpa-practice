@@ -30,5 +30,10 @@ public class LoginController {
         }
         return "main"; // templates/main.html
     }
+    @GetMapping("/logout-success")
+    public String logoutSuccess(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam(value = "denied", required = false) String denied, Model model){ //AuthenticationPrincipal 로그인한 사용자의 정보를 꺼내주는 어노테이션
+
+        return "logout-success"; // templates/logout-success.html
+    }
 
 }

@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>게시글 목록</title>
+    <link rel="stylesheet" type="text/css" href="/css/postList.css">
 </head>
 <body>
 
     <h1>📋 게시판 </h1>
-
-    <!--삭제 성공 또는 실패 메시지 출력-->
-<!--    <div th:if="${successMessage}" style="color: green; font-weight: bold; margin-bottom: 10px;">-->
-<!--        <p th:text="${successMessage}"></p>-->
-<!--    </div>-->
-<!--    <div th:if="${errorMessage}" style="color: red; font-weight: bold; margin-bottom: 10px;">-->
-<!--        <p th:text="${errorMessage}"></p>-->
-<!--    </div>-->
 
     <script th:if="${successMessage != null}" th:inline="javascript"> <!--JS 안에서 Thymeleaf변수 안전하게 출력-->
         alert([[${successMessage}]]+'');
@@ -48,6 +41,21 @@
             </tr>
         </tbody>
     </table>
+
+    <!--페이징처리-->
+    <div th:if="${postPage.totalPages > 0}">
+        <span th:if="${postPage.hasPrevious()}">
+            <a th:href="@{|/posts?page=${postPage.number -1}|}">이전</a>
+        </span>
+
+        <span th:each="i : ${#numbers.sequence(0, postPage.totalPages -1)}">
+            <a th:href="@{|/posts?page=${i}|}" th:text="${i+1}" th:classappend="${i == postPage.number}?'active'">페이지</a>
+        </span>
+
+        <span th:if="${postPage.hasNext()}">
+            <a th:href="@{|/posts?page=${postPage.number +1}|}">다음</a>
+        </span>
+    </div>
 
     <br/>
     <a th:href="@{/main}">← 메인으로</a>
