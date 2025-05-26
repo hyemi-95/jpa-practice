@@ -9,11 +9,13 @@
 
     <form th:action="${editMode}? @{'/posts/update/' + ${post.id}} : @{/posts/new}" method="post" th:object="${post}">
         <label for="'title">제목</label>
-        <input type="text" id="title" th:field="*{title}" required/>
+        <input type="text" id="title" th:field="*{title}"/>
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></div>
         <br/><br/>
 
         <label for="content">내용</label><br/>
-        <textarea id="content" th:field="*{content}" rows="10" cols="40" required></textarea>
+        <textarea id="content" th:field="*{content}" rows="10" cols="40"></textarea>
+        <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color: red"></div>
         <br/><br/>
 
         <button type="submit" th:text="${editMode}? '수정하기':'등록하기'">제출</button>

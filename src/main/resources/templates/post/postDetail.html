@@ -8,15 +8,20 @@
     <h1 th:text="${post.title}">제목</h1>
 
     <P><strong>작성자 : </strong><span th:text="${post.writer.name}"></span></P>
-    <P><strong>작성일 : </strong><span th:text="${#temporals.format(post.createdAt,'yyy-MM-dd HH:mm')}"></span>
-        <strong>수정일 : </strong><span th:text="${#temporals.format(post.updatedAt,'yyy-MM-dd HH:mm')}"></span></P>
+    <P><strong>작성일 : </strong><span th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd HH:mm')}"></span>
+        <strong>수정일 : </strong><span th:text="${#temporals.format(post.updatedAt,'yyyy-MM-dd HH:mm')}"></span></P>
     <hr/>
     <p th:text="${post.content}">내용</p>
 
-    <!--작성자 본인일 때만 수정버튼 보이기-->
-    <a th:if="${isOwner}" th:href="@{/posts/edit/{id}(id=${post.id})}">✏ 수정</a>
+    <!--작성자 본인일 때만 수정/삭제버튼 보이기-->
+    <div th:if="${isOwner}">
+        <a th:href="@{/posts/edit/{id}(id=${post.id})}">✏ 수정</a>
+        <form th:action="@{/posts/delete/{id}(id=${post.id})}" method="post" style="display: inline;">
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">🗑 삭제</button>
+        </form>
+    </div>
 
-    <be/><br/>
+    <br/><br/>
     <a th:href="@{/posts}">← 목록으로</a>
 </body>
 </html>

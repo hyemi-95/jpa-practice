@@ -43,7 +43,8 @@ public class PostService {
     //게시글 삭제
     @Transactional
     public void deletePost(Long id){
-        postRepository.deleteById(id);
+        Post post = findPostById(id);
+        postRepository.delete(post);
     }
 
     //게시글 수정

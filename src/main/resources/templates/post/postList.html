@@ -8,6 +8,21 @@
 
     <h1>📋 게시판 </h1>
 
+    <!--삭제 성공 또는 실패 메시지 출력-->
+<!--    <div th:if="${successMessage}" style="color: green; font-weight: bold; margin-bottom: 10px;">-->
+<!--        <p th:text="${successMessage}"></p>-->
+<!--    </div>-->
+<!--    <div th:if="${errorMessage}" style="color: red; font-weight: bold; margin-bottom: 10px;">-->
+<!--        <p th:text="${errorMessage}"></p>-->
+<!--    </div>-->
+
+    <script th:if="${successMessage != null}" th:inline="javascript"> <!--JS 안에서 Thymeleaf변수 안전하게 출력-->
+        alert([[${successMessage}]]+'');
+    </script>
+    <script th:if="${errorMessage != null}" th:inline="javascript">
+        alert([[${errorMessage}]]+'');
+    </script>
+
     <a th:href="@{/posts/new}">✏ 게시글 작성</a>
     <br/><br/>
 
@@ -25,7 +40,7 @@
             <tr th:each="post, stat : ${posts}">
                 <td th:text="${stat.count}">1</td>
                 <td>
-                    <a th:href="@{/posts/{id}(id= ${post.id})}" th:text="${post.title}">제목</a>
+                    <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">제목</a>
                 </td>
                 <td th:text="${post.writer.name}">홍길동</td>
                 <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01</td>
@@ -35,7 +50,7 @@
     </table>
 
     <br/>
-    <a th:href="@{main}">← 메인으로</a>
+    <a th:href="@{/main}">← 메인으로</a>
 
 </body>
 </html>
